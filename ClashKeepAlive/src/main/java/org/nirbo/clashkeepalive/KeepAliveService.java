@@ -48,10 +48,11 @@ public class KeepAliveService extends Service {
     private void startServiceTask() {
         mAppDetails = mWorkerService.getForegroundApp();
         String mAppName = mAppDetails.getString("AppName");
+        String mAppPackage = mAppDetails.getString("AppPackage");
         int mAppPID = mAppDetails.getInt("AppPID");
 
         if (mAppName.equals(cocName)) {
-            mWorkerService.executeLogic(mAppName, mAppPID);
+            mWorkerService.executeLogic(mAppName, mAppPackage, mAppPID);
         }
     }
 

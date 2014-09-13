@@ -27,8 +27,8 @@ public class KeepAliveWorker {
         return mAppDetails;
     }
 
-    public void executeLogic(String appName, int appPID) {
-        Log.i("NIR", appName + " " + appPID);
+    public void executeLogic(String appName, String appPackage, int appPID) {
+        Log.i("NIR", appName + " " + appPID + " " + appPackage);
     }
 
 
