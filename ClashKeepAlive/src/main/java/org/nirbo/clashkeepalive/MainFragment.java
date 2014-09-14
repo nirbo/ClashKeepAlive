@@ -25,7 +25,7 @@ public class MainFragment extends Fragment implements CompoundButton.OnCheckedCh
         mServiceSwitch.setOnCheckedChangeListener(this);
 
         if (isServiceRunning()) {
-            mServiceSwitch.setChecked(true);
+            setCheckedWithoutListener(mServiceSwitch);
             Log.i("NIR", "Service is Running");
         } else {
             Log.i("NIR", "Service is Stopped");
@@ -57,5 +57,11 @@ public class MainFragment extends Fragment implements CompoundButton.OnCheckedCh
         }
 
         return false;
+    }
+
+    private void setCheckedWithoutListener(Switch mServiceSwitch) {
+        mServiceSwitch.setOnCheckedChangeListener(null);
+        mServiceSwitch.setChecked(true);
+        mServiceSwitch.setOnCheckedChangeListener(this);
     }
 }
