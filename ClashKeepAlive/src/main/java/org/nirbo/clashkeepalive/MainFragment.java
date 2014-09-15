@@ -1,6 +1,5 @@
 package org.nirbo.clashkeepalive;
 
-import android.app.ActivityManager;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -24,11 +23,8 @@ public class MainFragment extends Fragment implements CompoundButton.OnCheckedCh
         Switch mServiceSwitch = (Switch) rootView.findViewById(R.id.serviceSwitch);
         mServiceSwitch.setOnCheckedChangeListener(this);
 
-        if (isServiceRunning()) {
+        if (Utils.isServiceRunning(mContext)) {
             setCheckedWithoutListener(mServiceSwitch);
-            Log.i("NIR", "Service is Running");
-        } else {
-            Log.i("NIR", "Service is Stopped");
         }
 
         return rootView;
@@ -45,18 +41,6 @@ public class MainFragment extends Fragment implements CompoundButton.OnCheckedCh
             Utils.toastMessage(mContext, "Service Stopped");
             mContext.stopService(mServiceIntent);
         }
-    }
-
-    private boolean isServiceRunning() {
-        ActivityManager activityManager = (ActivityManager) mContext.getSystemService(mContext.ACTIVITY_SERVICE);
-
-        for (ActivityManager.RunningServiceInfo service : activityManager.getRunningServices(Integer.MAX_VALUE)) {
-            if (KeepAliveService.class.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private void setCheckedWithoutListener(Switch mServiceSwitch) {

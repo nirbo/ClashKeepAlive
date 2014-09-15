@@ -7,8 +7,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import org.nirbo.clashkeepalive.Utilities.Utils;
 
 public class GetForegroundApp extends AsyncTask<Void, Void, Bundle> {
     Context mContext;
@@ -56,12 +54,6 @@ public class GetForegroundApp extends AsyncTask<Void, Void, Bundle> {
     @Override
     protected void onPostExecute(Bundle appDetails) {
         super.onPostExecute(appDetails);
-
-//        if (appDetails.getString("AppName") != null) {
-//            Utils.toastMessage(mContext, appDetails.getString("AppName"));
-//        } else {
-//            Utils.toastMessage(mContext, "NULL");
-//        }
     }
 
 

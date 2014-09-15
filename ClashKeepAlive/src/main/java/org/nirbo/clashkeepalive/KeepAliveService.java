@@ -27,7 +27,7 @@ public class KeepAliveService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         WorkerRunnable mWorkerRunnable = new WorkerRunnable(this);
 
-        this.mScheduledExecutor.scheduleAtFixedRate(mWorkerRunnable, 0, 5, TimeUnit.SECONDS);
+        this.mScheduledExecutor.scheduleAtFixedRate(mWorkerRunnable, 0, 60, TimeUnit.SECONDS);
 
         return Service.START_REDELIVER_INTENT;
     }
