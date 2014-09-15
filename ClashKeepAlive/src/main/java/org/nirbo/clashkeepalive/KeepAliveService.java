@@ -4,6 +4,8 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
+import org.nirbo.clashkeepalive.Utilities.Utils;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -26,8 +28,10 @@ public class KeepAliveService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         WorkerRunnable mWorkerRunnable = new WorkerRunnable(this);
+        int mRandomInterval = Utils.randomNumber(47, 139);
+        Log.i("NIR", "Random Interval: " + mRandomInterval);
 
-        this.mScheduledExecutor.scheduleAtFixedRate(mWorkerRunnable, 0, 60, TimeUnit.SECONDS);
+        this.mScheduledExecutor.scheduleAtFixedRate(mWorkerRunnable, 0, mRandomInterval, TimeUnit.SECONDS);
 
         return Service.START_REDELIVER_INTENT;
     }

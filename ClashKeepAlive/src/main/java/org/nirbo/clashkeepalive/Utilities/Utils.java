@@ -5,6 +5,8 @@ import android.content.Context;
 import android.widget.Toast;
 import org.nirbo.clashkeepalive.KeepAliveService;
 
+import java.util.Random;
+
 public class Utils {
 
     public static void toastMessage(Context context, String message) {
@@ -24,5 +26,14 @@ public class Utils {
         }
 
         return false;
+    }
+
+    public static int randomNumber(int min, int max) {
+        Random random = new Random();
+        int mRandNumber = 0;
+
+        mRandNumber = random.nextInt(max - min) + min;
+
+        return mRandNumber;
     }
 }

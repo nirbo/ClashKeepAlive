@@ -11,6 +11,7 @@ import java.util.concurrent.ExecutionException;
 public class KeepAliveWorker {
     Context mContext;
     private static final int COC_RELAUNCH_INTERVAL = 5000;
+    Handler mHandler = new Handler();
 
     public KeepAliveWorker(Context context) {
         mContext = context;
@@ -21,18 +22,14 @@ public class KeepAliveWorker {
 
         try {
             mAppDetails = new GetForegroundApp(mContext).execute().get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        } catch (InterruptedException ignore) {
+        } catch (ExecutionException ignore) {}
 
         return mAppDetails;
     }
 
     public void executeLogic(String appName, String appPackage, int appPID) {
         final Runtime runtime = Runtime.getRuntime();
-        Handler mHandler = new Handler();
 
         try {
             runtime.exec("su -c kill " + appPID);
