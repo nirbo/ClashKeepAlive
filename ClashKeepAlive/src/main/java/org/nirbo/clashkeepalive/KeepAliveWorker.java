@@ -2,8 +2,8 @@ package org.nirbo.clashkeepalive;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.Intent;
 import android.os.*;
+import org.nirbo.clashkeepalive.Utilities.Utils;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -50,8 +50,7 @@ public class KeepAliveWorker {
         @Override
         public void run() {
             try {
-                Intent mStartCocIntent = mContext.getPackageManager().getLaunchIntentForPackage(mCocPackageName);
-                mContext.startActivity(mStartCocIntent);
+                Utils.launchCoc(mContext, mCocPackageName);
             } catch (ActivityNotFoundException e) {
                 e.printStackTrace();
             }

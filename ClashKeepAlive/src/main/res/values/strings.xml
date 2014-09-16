@@ -3,6 +3,7 @@
 
     <string name="app_name">ClashKeepAlive</string>
     <string name="serviceState">Clash of Clans KeepAlive State:</string>
+    <string name="launchCoc">Launch Clash of Clans</string>
     <string name="action_settings">Settings</string>
 
     <string name="enabled">Enabled</string>
