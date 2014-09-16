@@ -73,11 +73,15 @@ public class Utils {
         mContext.startActivity(mStartCocIntent);
     }
 
-    public static int randomNumber(int min, int max) {
+    public static int randomNumber() {
         Random random = new Random();
         int mRandNumber = 0;
 
-        mRandNumber = random.nextInt(max - min) + min;
+        mRandNumber = random.nextInt(180);
+
+        while (mRandNumber < 50) {
+            mRandNumber = random.nextInt(180);
+        }
 
         return mRandNumber;
     }

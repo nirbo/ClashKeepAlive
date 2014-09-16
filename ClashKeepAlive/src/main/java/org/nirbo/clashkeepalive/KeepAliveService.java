@@ -28,7 +28,7 @@ public class KeepAliveService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         WorkerRunnable mWorkerRunnable = new WorkerRunnable(this);
-        int mRandomInterval = Utils.randomNumber(47, 139);
+        int mRandomInterval = Utils.randomNumber();
         Log.i("NIR", "Random Interval: " + mRandomInterval);
 
         this.mScheduledExecutor.scheduleAtFixedRate(mWorkerRunnable, 0, mRandomInterval, TimeUnit.SECONDS);
