@@ -3,35 +3,33 @@ package org.nirbo.clashkeepalive;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 import org.nirbo.clashkeepalive.Utilities.Utils;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
 public class KeepAliveService extends Service {
     private KeepAliveWorker mWorkerService;
-    protected ScheduledExecutorService mScheduledExecutor;
     private Bundle mAppDetails;
     private String cocName = "Clash of Clans";
+    private Handler mHandler;
+    private WorkerRunnable mWorkerRunnable;
+    private long mRandomInterval;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
         mWorkerService = new KeepAliveWorker(this);
-        mScheduledExecutor = Executors.newSingleThreadScheduledExecutor();
+        mHandler = new Handler();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        WorkerRunnable mWorkerRunnable = new WorkerRunnable(this);
-        int mRandomInterval = Utils.randomNumber();
-        Log.i("NIR", "Random Interval: " + mRandomInterval);
+        mWorkerRunnable = new WorkerRunnable(this);
+        mRandomInterval = Utils.randomNumber();
 
-        this.mScheduledExecutor.scheduleAtFixedRate(mWorkerRunnable, 0, mRandomInterval, TimeUnit.SECONDS);
+        mHandler.post(mWorkerRunnable);
 
         return Service.START_REDELIVER_INTENT;
     }
@@ -40,7 +38,7 @@ public class KeepAliveService extends Service {
     public void onDestroy() {
         super.onDestroy();
 
-        mScheduledExecutor.shutdownNow();
+        mHandler.removeCallbacks(mWorkerRunnable);
     }
 
     @Override
@@ -69,6 +67,10 @@ public class KeepAliveService extends Service {
         @Override
         public void run() {
             startServiceTask();
+
+            mRandomInterval = Utils.randomNumber();
+            Log.i("NIR", "New Random Interval: " + mRandomInterval);
+            mHandler.postDelayed(mWorkerRunnable, mRandomInterval);
         }
     }
 
