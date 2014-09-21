@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Toast;
+import org.joda.time.DateTime;
 import org.nirbo.clashkeepalive.KeepAliveService;
 
 import java.util.Random;
@@ -73,14 +74,14 @@ public class Utils {
         mContext.startActivity(mStartCocIntent);
     }
 
-    public static long randomNumber() {
+    public static int randomNumber(int max, int min) {
         Random random = new Random();
-        long mRandNumber = 0;
-        int max = 180000;
-        int min = 50000;
+        int mRandNumber = 0;
 
         mRandNumber = random.nextInt(max - min) + min;
 
         return mRandNumber;
     }
+
+
 }
