@@ -3,17 +3,18 @@ package org.nirbo.clashkeepalive;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.os.*;
-import org.joda.time.DateTime;
+import android.util.Log;
 import org.nirbo.clashkeepalive.Utilities.Utils;
 
 import java.io.IOException;
 
 public class KeepAliveWorker {
     Context mContext;
-    private static final int COC_RELAUNCH_INTERVAL = 5000;
-    private static final int COC_BREAK_INTERVAL = 600000;
+    private static final int COC_RELAUNCH_INTERVAL = Utils.randomNumber(10000, 4500);
+    private static final int COC_BREAK_INTERVAL = Utils.randomNumber(660000, 480000);
+    private long mBreakCounter = 0;
+    private int mRandomBreakInterval = 0;
     Handler mHandler = new Handler();
-    private DateTime mBreakCounter = null;
 
     public KeepAliveWorker(Context context) {
         mContext = context;
@@ -31,11 +32,11 @@ public class KeepAliveWorker {
 
     public void executeLogic(String appName, String appPackage, int appPID) {
         final Runtime runtime = Runtime.getRuntime();
-        DateTime mCurrentTime = new DateTime();
-        int mRandomBreakInterval = Utils.randomNumber(7, 2);
+        long mCurrentTime = Utils.getCurrentTimeSeconds();
 
-        if (mBreakCounter == null) {
-            mBreakCounter = new DateTime();
+        if (mBreakCounter == 0) {
+            mBreakCounter = Utils.getCurrentTimeSeconds();
+            mRandomBreakInterval = Utils.randomNumber(25200, 7200);
         }
 
         try {
@@ -44,9 +45,10 @@ public class KeepAliveWorker {
             e.printStackTrace();
         }
 
-        if (mBreakCounter.plusHours(mRandomBreakInterval).isAfter(mCurrentTime)) {
+        long mBreakTime = (mBreakCounter + mRandomBreakInterval);
+        if (mCurrentTime > mBreakTime) {
             mHandler.postDelayed(new StartCoc(appPackage), COC_BREAK_INTERVAL);
-            mBreakCounter = null;
+            mBreakCounter = 0;
         } else {
             mHandler.postDelayed(new StartCoc(appPackage), COC_RELAUNCH_INTERVAL);
         }

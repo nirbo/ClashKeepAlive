@@ -82,5 +82,8 @@ public class Utils {
         return mRandNumber;
     }
 
+    public static long getCurrentTimeSeconds() {
+        return (System.currentTimeMillis() / 1000);
+    }
 
 }
