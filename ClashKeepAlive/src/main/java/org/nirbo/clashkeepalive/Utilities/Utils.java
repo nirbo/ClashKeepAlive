@@ -8,7 +8,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Toast;
-import org.joda.time.DateTime;
 import org.nirbo.clashkeepalive.KeepAliveService;
 
 import java.util.Random;
